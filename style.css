@@ -1,0 +1,254 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #22263a;
+  --green: #22c55e;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --yellow: #f59e0b;
+  --purple: #a855f7;
+  --orange: #f97316;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --radius: 12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  /* Safe area pour iPhone avec encoche/Dynamic Island */
+  padding-bottom: env(safe-area-inset-bottom);
+  -webkit-text-size-adjust: 100%;
+}
+
+header {
+  background: var(--surface);
+  padding: 1rem 1.2rem;
+  padding-top: calc(1rem + env(safe-area-inset-top));
+  padding-left: calc(1.2rem + env(safe-area-inset-left));
+  padding-right: calc(1.2rem + env(safe-area-inset-right));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--surface2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 { font-size: 1.4rem; }
+
+.header-controls { display: flex; gap: .5rem; }
+
+/* iOS : évite le zoom auto sur focus input (font-size min 16px) */
+input[type="text"], input[type="number"] {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: .55rem .7rem;
+  font-size: 16px;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+select {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: .5rem .7rem;
+  font-size: 16px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+main { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem; display: flex; flex-direction: column; gap: 1.2rem; }
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.4rem;
+  border: 1px solid var(--surface2);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+.summary-grid .card {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  padding: 1rem 1.2rem;
+}
+
+.summary-grid .card span { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.summary-grid .card strong { font-size: 1.5rem; }
+
+.card.green strong { color: var(--green); }
+.card.red strong { color: var(--red); }
+.card.blue strong { color: var(--blue); }
+.card.yellow strong { color: var(--yellow); }
+.card.purple strong { color: var(--purple); }
+.card.orange strong { color: var(--orange); }
+
+.progress-section { padding: 1rem 1.4rem; }
+.progress-header { display: flex; justify-content: space-between; margin-bottom: .5rem; font-size: .9rem; color: var(--muted); }
+.progress-bar { background: var(--surface2); border-radius: 99px; height: 10px; overflow: hidden; }
+#progressFill { height: 100%; border-radius: 99px; background: var(--green); transition: width .4s, background .4s; width: 0%; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+
+h2 { font-size: 1rem; margin-bottom: 1rem; color: var(--text); }
+
+.entry-form {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+
+.entry-form input[type="text"] { min-width: 0; }
+.entry-form input[type="number"] { width: 110px; }
+
+input::placeholder { color: var(--muted); }
+
+.btn-add {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: .55rem .9rem;
+  font-size: .9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity .2s;
+  /* Touch target minimum 44px pour iOS */
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-add:hover { opacity: .85; }
+.btn-add:active { opacity: .7; }
+
+.entry-list { list-style: none; display: flex; flex-direction: column; gap: .4rem; max-height: 280px; overflow-y: auto; }
+
+.entry-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: .5rem .8rem;
+  font-size: .88rem;
+  gap: .5rem;
+}
+
+.entry-list li .label { flex: 1; }
+.entry-list li .cat { font-size: .75rem; color: var(--muted); background: #2d3348; border-radius: 4px; padding: .1rem .4rem; }
+.entry-list li .amount { font-weight: 600; min-width: 70px; text-align: right; }
+.entry-list li .amount.income { color: var(--green); }
+.entry-list li .amount.expense { color: var(--red); }
+.entry-list li .recurring { font-size: .7rem; color: var(--muted); }
+
+.btn-del {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0 .4rem;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-del:hover { color: var(--red); }
+
+.section-total { margin-top: .8rem; font-size: .85rem; color: var(--muted); border-top: 1px solid var(--surface2); padding-top: .6rem; }
+.purple-text { color: var(--purple); }
+.orange-text { color: var(--orange); }
+
+/* Reste à vivre */
+.reste-card { border: 1px solid #2d3a4a; }
+.reste-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: .5rem; }
+.reste-header h2 { margin-bottom: .2rem; }
+.reste-subtitle { font-size: .8rem; color: var(--muted); }
+.reste-amount-wrap { text-align: right; }
+.reste-amount-wrap strong { font-size: 2rem; display: block; }
+.reste-amount-wrap span { font-size: .85rem; }
+.reste-breakdown { display: flex; flex-direction: column; gap: .4rem; border-top: 1px solid var(--surface2); padding-top: .8rem; }
+.rb-item { display: flex; justify-content: space-between; font-size: .9rem; padding: .3rem .5rem; border-radius: 6px; }
+.rb-item:hover { background: var(--surface2); }
+.rb-total { font-weight: 700; border-top: 1px solid var(--surface2); margin-top: .3rem; padding-top: .6rem; font-size: 1rem; }
+
+.savings-goal .goal-row { display: flex; gap: .5rem; align-items: center; }
+.savings-goal input { max-width: 200px; }
+.goal-stats { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: 1rem; padding: .8rem; background: var(--surface2); border-radius: 8px; }
+.gs-item { display: flex; flex-direction: column; gap: .2rem; }
+.gs-item span { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.gs-item strong { font-size: 1.2rem; }
+#goalStatus { margin-top: .7rem; font-size: .9rem; }
+
+.annual-view h2 { margin-bottom: 1rem; }
+.table-wrapper { overflow-x: auto; }
+
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+th { color: var(--muted); text-align: left; padding: .5rem .7rem; border-bottom: 1px solid var(--surface2); font-weight: 500; }
+td { padding: .5rem .7rem; border-bottom: 1px solid #1e2235; }
+tbody tr:hover { background: var(--surface2); }
+tbody tr.current-month { background: #1e2a3a; }
+tfoot td { font-weight: 700; border-top: 2px solid var(--surface2); padding-top: .7rem; }
+
+.pos { color: var(--green); }
+.neg { color: var(--red); }
+
+/* Supprime les inputs number spinners sur iOS/Safari */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+
+@media (max-width: 900px) {
+  .summary-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+  .entry-form { grid-template-columns: 1fr 1fr; }
+  .entry-form input[type="number"] { width: 100%; }
+  .entry-form .btn-add { grid-column: span 2; }
+  header { flex-direction: column; gap: .5rem; align-items: flex-start; }
+  .reste-amount-wrap strong { font-size: 1.6rem; }
+  main { padding: 1rem .75rem; }
+}
+
+/* iPhone 15 Plus : 430px */
+@media (max-width: 480px) {
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  .summary-grid .card strong { font-size: 1.1rem; }
+  .summary-grid .card span { font-size: .7rem; }
+  .entry-form { grid-template-columns: 1fr 1fr; gap: .4rem; }
+  .entry-form input[type="text"] { grid-column: span 2; }
+  .entry-form input[type="number"] { width: 100%; }
+  .entry-form select { grid-column: span 1; }
+  .entry-form .btn-add { grid-column: span 2; }
+  .reste-amount-wrap strong { font-size: 1.4rem; }
+  .goal-stats { grid-template-columns: 1fr 1fr; }
+  table { font-size: .78rem; }
+  th, td { padding: .4rem .4rem; }
+  h2 { font-size: .95rem; }
+  .card { padding: 1rem; }
+  main { padding: .75rem .5rem; gap: .9rem; }
+}

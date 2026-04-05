@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Mes Finances" />
+  <title>Mes Finances</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>💰 Mes Finances</h1>
+    <div class="header-controls">
+      <select id="monthSelect"></select>
+      <select id="yearSelect"></select>
+    </div>
+  </header>
+
+  <main>
+    <!-- Résumé -->
+    <section class="summary-grid">
+      <div class="card green">
+        <span>Revenus</span>
+        <strong id="totalIncome">0,00 €</strong>
+      </div>
+      <div class="card red">
+        <span>Dépenses</span>
+        <strong id="totalExpenses">0,00 €</strong>
+      </div>
+      <div class="card blue">
+        <span>Solde</span>
+        <strong id="balance">0,00 €</strong>
+      </div>
+      <div class="card yellow">
+        <span>Épargne possible</span>
+        <strong id="savings">0,00 €</strong>
+      </div>
+      <div class="card purple">
+        <span>Total épargne</span>
+        <strong id="totalSavingsBank">0,00 €</strong>
+      </div>
+      <div class="card orange">
+        <span>Total investi crypto</span>
+        <strong id="totalCrypto">0,00 €</strong>
+      </div>
+    </section>
+
+    <!-- Reste à vivre -->
+    <section class="card reste-card">
+      <div class="reste-header">
+        <div>
+          <h2>🏠 Reste à vivre ce mois</h2>
+          <p class="reste-subtitle">Revenus − Dépenses − Épargne − Objectif épargne − Crypto</p>
+        </div>
+        <div class="reste-amount-wrap">
+          <strong id="resteAVivre">0,00 €</strong>
+          <span id="resteLabel"></span>
+        </div>
+      </div>
+      <div class="reste-breakdown">
+        <div class="rb-item">
+          <span>💵 Revenus</span>
+          <span id="rbIncome" class="pos">0,00 €</span>
+        </div>
+        <div class="rb-item">
+          <span>💸 Dépenses</span>
+          <span id="rbExpenses" class="neg">− 0,00 €</span>
+        </div>
+        <div class="rb-item">
+          <span>🏦 Épargne</span>
+          <span id="rbSavings" style="color:var(--purple)">− 0,00 €</span>
+        </div>
+        <div class="rb-item">
+          <span>🎯 Objectif épargne</span>
+          <span id="rbGoal" style="color:var(--yellow)">− 0,00 €</span>
+        </div>
+        <div class="rb-item">
+          <span>₿ Crypto</span>
+          <span id="rbCrypto" style="color:var(--orange)">− 0,00 €</span>
+        </div>
+        <div class="rb-item rb-total">
+          <span>= Reste à vivre</span>
+          <span id="rbReste">0,00 €</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Barre de progression budget -->
+    <section class="progress-section card">
+      <div class="progress-header">
+        <span>Budget consommé</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div id="progressFill"></div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <!-- Revenus -->
+      <section class="card">
+        <h2>💵 Revenus</h2>
+        <form id="incomeForm" class="entry-form">
+          <input type="text" id="incomeLabel" placeholder="Libellé (ex: Salaire)" required />
+          <input type="number" id="incomeAmount" placeholder="Montant €" step="0.01" min="0" required />
+          <select id="incomeRecurring">
+            <option value="once">Ponctuel</option>
+            <option value="monthly" selected>Mensuel</option>
+          </select>
+          <button type="submit" class="btn-add">+ Ajouter</button>
+        </form>
+        <ul id="incomeList" class="entry-list"></ul>
+      </section>
+
+      <!-- Dépenses -->
+      <section class="card">
+        <h2>💸 Dépenses</h2>
+        <form id="expenseForm" class="entry-form">
+          <input type="text" id="expenseLabel" placeholder="Libellé (ex: Loyer)" required />
+          <input type="number" id="expenseAmount" placeholder="Montant €" step="0.01" min="0" required />
+          <select id="expenseCategory">
+            <option value="fixe">Fixe</option>
+            <option value="courses">Courses</option>
+            <option value="essence">Essence</option>
+            <option value="loisirs">Loisirs</option>
+            <option value="sante">Santé</option>
+            <option value="autre">Autre</option>
+          </select>
+          <select id="expenseRecurring">
+            <option value="once">Ponctuel</option>
+            <option value="monthly" selected>Mensuel</option>
+          </select>
+          <button type="submit" class="btn-add">+ Ajouter</button>
+        </form>
+        <ul id="expenseList" class="entry-list"></ul>
+      </section>
+    </div>
+
+    <!-- Épargne & Crypto -->
+    <div class="two-col">
+      <!-- Épargne -->
+      <section class="card">
+        <h2>🏦 Épargne</h2>
+        <form id="savingsBankForm" class="entry-form">
+          <input type="text" id="savingsBankLabel" placeholder="Libellé (ex: Livret A)" required />
+          <input type="number" id="savingsBankAmount" placeholder="Montant €" step="0.01" min="0" required />
+          <select id="savingsBankRecurring">
+            <option value="once">Ponctuel</option>
+            <option value="monthly" selected>Mensuel</option>
+          </select>
+          <button type="submit" class="btn-add">+ Ajouter</button>
+        </form>
+        <ul id="savingsBankList" class="entry-list"></ul>
+        <div class="section-total">Total cumulé : <strong id="savingsBankCumul" class="purple-text">0,00 €</strong></div>
+      </section>
+
+      <!-- Crypto -->
+      <section class="card">
+        <h2>₿ Crypto</h2>
+        <form id="cryptoForm" class="entry-form crypto-form">
+          <input type="text" id="cryptoLabel" placeholder="Coin (ex: Bitcoin)" required />
+          <input type="number" id="cryptoAmount" placeholder="Montant €" step="0.01" min="0" required />
+          <select id="cryptoRecurring">
+            <option value="once">Ponctuel</option>
+            <option value="monthly" selected>Mensuel</option>
+          </select>
+          <button type="submit" class="btn-add">+ Ajouter</button>
+        </form>
+        <ul id="cryptoList" class="entry-list"></ul>
+        <div class="section-total">Total investi : <strong id="cryptoCumul" class="orange-text">0,00 €</strong></div>
+      </section>
+    </div>
+
+    <!-- Objectif épargne -->
+    <section class="card savings-goal">
+      <h2>🎯 Objectif d'épargne mensuel</h2>
+      <div class="goal-row">
+        <input type="number" id="savingsGoal" placeholder="Montant à mettre de côté €" step="0.01" min="0" />
+        <button id="saveSavingsGoal" class="btn-add">Définir</button>
+      </div>
+      <div class="goal-stats" id="goalStats" style="display:none">
+        <div class="gs-item">
+          <span>Mis de côté ce mois</span>
+          <strong id="goalMonthAmount" class="purple-text">0,00 €</strong>
+        </div>
+        <div class="gs-item">
+          <span>Cumul sur l'année</span>
+          <strong id="goalYearCumul" class="purple-text">0,00 €</strong>
+        </div>
+      </div>
+      <p id="goalStatus"></p>
+    </section>
+
+    <!-- Vue annuelle -->
+    <section class="card annual-view">
+      <h2>📅 Vue annuelle <span id="annualYear"></span></h2>
+      <div class="table-wrapper">
+        <table id="annualTable">
+          <thead>
+            <tr>
+              <th>Mois</th>
+              <th>Revenus</th>
+              <th>Dépenses</th>
+              <th>🏦 Épargne</th>
+              <th>🎯 Objectif épargne</th>
+              <th>₿ Crypto</th>
+              <th>🏠 Reste à vivre</th>
+            </tr>
+          </thead>
+          <tbody id="annualBody"></tbody>
+          <tfoot id="annualFoot"></tfoot>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
