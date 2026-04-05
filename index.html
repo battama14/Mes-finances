@@ -21,30 +21,12 @@
   <main>
     <!-- Résumé -->
     <section class="summary-grid">
-      <div class="card green">
-        <span>Revenus</span>
-        <strong id="totalIncome">0,00 €</strong>
-      </div>
-      <div class="card red">
-        <span>Dépenses</span>
-        <strong id="totalExpenses">0,00 €</strong>
-      </div>
-      <div class="card blue">
-        <span>Solde</span>
-        <strong id="balance">0,00 €</strong>
-      </div>
-      <div class="card yellow">
-        <span>Épargne possible</span>
-        <strong id="savings">0,00 €</strong>
-      </div>
-      <div class="card purple">
-        <span>Total épargne</span>
-        <strong id="totalSavingsBank">0,00 €</strong>
-      </div>
-      <div class="card orange">
-        <span>Total investi crypto</span>
-        <strong id="totalCrypto">0,00 €</strong>
-      </div>
+      <div class="card green"><span>Revenus</span><strong id="totalIncome">0,00 €</strong></div>
+      <div class="card red"><span>Dépenses</span><strong id="totalExpenses">0,00 €</strong></div>
+      <div class="card blue"><span>Solde</span><strong id="balance">0,00 €</strong></div>
+      <div class="card yellow"><span>Objectif épargne</span><strong id="savings">0,00 €</strong></div>
+      <div class="card purple"><span>Total épargne</span><strong id="totalSavingsBank">0,00 €</strong></div>
+      <div class="card orange"><span>Total investi crypto</span><strong id="totalCrypto">0,00 €</strong></div>
     </section>
 
     <!-- Reste à vivre -->
@@ -60,42 +42,19 @@
         </div>
       </div>
       <div class="reste-breakdown">
-        <div class="rb-item">
-          <span>💵 Revenus</span>
-          <span id="rbIncome" class="pos">0,00 €</span>
-        </div>
-        <div class="rb-item">
-          <span>💸 Dépenses</span>
-          <span id="rbExpenses" class="neg">− 0,00 €</span>
-        </div>
-        <div class="rb-item">
-          <span>🏦 Épargne</span>
-          <span id="rbSavings" style="color:var(--purple)">− 0,00 €</span>
-        </div>
-        <div class="rb-item">
-          <span>🎯 Objectif épargne</span>
-          <span id="rbGoal" style="color:var(--yellow)">− 0,00 €</span>
-        </div>
-        <div class="rb-item">
-          <span>₿ Crypto</span>
-          <span id="rbCrypto" style="color:var(--orange)">− 0,00 €</span>
-        </div>
-        <div class="rb-item rb-total">
-          <span>= Reste à vivre</span>
-          <span id="rbReste">0,00 €</span>
-        </div>
+        <div class="rb-item"><span>💵 Revenus</span><span id="rbIncome" class="pos">0,00 €</span></div>
+        <div class="rb-item"><span>💸 Dépenses</span><span id="rbExpenses" class="neg">− 0,00 €</span></div>
+        <div class="rb-item"><span>🏦 Épargne</span><span id="rbSavings" style="color:var(--purple)">− 0,00 €</span></div>
+        <div class="rb-item"><span>🎯 Objectif épargne</span><span id="rbGoal" style="color:var(--yellow)">− 0,00 €</span></div>
+        <div class="rb-item"><span>₿ Crypto</span><span id="rbCrypto" style="color:var(--orange)">− 0,00 €</span></div>
+        <div class="rb-item rb-total"><span>= Reste à vivre</span><span id="rbReste">0,00 €</span></div>
       </div>
     </section>
 
-    <!-- Barre de progression budget -->
+    <!-- Barre de progression -->
     <section class="progress-section card">
-      <div class="progress-header">
-        <span>Budget consommé</span>
-        <span id="progressPercent">0%</span>
-      </div>
-      <div class="progress-bar">
-        <div id="progressFill"></div>
-      </div>
+      <div class="progress-header"><span>Budget consommé</span><span id="progressPercent">0%</span></div>
+      <div class="progress-bar"><div id="progressFill"></div></div>
     </section>
 
     <div class="two-col">
@@ -117,7 +76,7 @@
       <!-- Dépenses -->
       <section class="card">
         <h2>💸 Dépenses</h2>
-        <form id="expenseForm" class="entry-form">
+        <form id="expenseForm" class="entry-form expense-form">
           <input type="text" id="expenseLabel" placeholder="Libellé (ex: Loyer)" required />
           <input type="number" id="expenseAmount" placeholder="Montant €" step="0.01" min="0" required />
           <select id="expenseCategory">
@@ -128,10 +87,19 @@
             <option value="sante">Santé</option>
             <option value="autre">Autre</option>
           </select>
-          <select id="expenseRecurring">
+          <select id="expenseRecurring" onchange="toggleEndDate('expense')">
             <option value="once">Ponctuel</option>
             <option value="monthly" selected>Mensuel</option>
           </select>
+          <div class="end-date-row" id="expenseEndDateRow">
+            <label>Fin le :</label>
+            <select id="expenseEndMonth">
+              <option value="">Mois</option>
+            </select>
+            <select id="expenseEndYear">
+              <option value="">Année</option>
+            </select>
+          </div>
           <button type="submit" class="btn-add">+ Ajouter</button>
         </form>
         <ul id="expenseList" class="entry-list"></ul>
@@ -146,10 +114,15 @@
         <form id="savingsBankForm" class="entry-form">
           <input type="text" id="savingsBankLabel" placeholder="Libellé (ex: Livret A)" required />
           <input type="number" id="savingsBankAmount" placeholder="Montant €" step="0.01" min="0" required />
-          <select id="savingsBankRecurring">
+          <select id="savingsBankRecurring" onchange="toggleEndDate('savingsBank')">
             <option value="once">Ponctuel</option>
             <option value="monthly" selected>Mensuel</option>
           </select>
+          <div class="end-date-row" id="savingsBankEndDateRow">
+            <label>Fin le :</label>
+            <select id="savingsBankEndMonth"><option value="">Mois</option></select>
+            <select id="savingsBankEndYear"><option value="">Année</option></select>
+          </div>
           <button type="submit" class="btn-add">+ Ajouter</button>
         </form>
         <ul id="savingsBankList" class="entry-list"></ul>
@@ -161,7 +134,8 @@
         <h2>₿ Crypto</h2>
         <form id="cryptoForm" class="entry-form crypto-form">
           <input type="text" id="cryptoLabel" placeholder="Coin (ex: Bitcoin)" required />
-          <input type="number" id="cryptoAmount" placeholder="Montant €" step="0.01" min="0" required />
+          <input type="number" id="cryptoAmount" placeholder="Montant investi €" step="0.01" min="0" required />
+          <input type="number" id="cryptoBuyPrice" placeholder="Prix d'achat $/unité" step="any" min="0" required />
           <select id="cryptoRecurring">
             <option value="once">Ponctuel</option>
             <option value="monthly" selected>Mensuel</option>
@@ -169,7 +143,17 @@
           <button type="submit" class="btn-add">+ Ajouter</button>
         </form>
         <ul id="cryptoList" class="entry-list"></ul>
-        <div class="section-total">Total investi : <strong id="cryptoCumul" class="orange-text">0,00 €</strong></div>
+
+        <!-- Prix actuels par coin -->
+        <div class="crypto-prices" id="cryptoPricesSection">
+          <h3>📈 Prix actuels</h3>
+          <div id="cryptoPricesList"></div>
+        </div>
+
+        <div class="section-total">
+          Total investi : <strong id="cryptoCumul" class="orange-text">0,00 €</strong>
+          &nbsp;|&nbsp; P&amp;L : <strong id="cryptoPnl">0,00 €</strong>
+        </div>
       </section>
     </div>
 
@@ -181,14 +165,8 @@
         <button id="saveSavingsGoal" class="btn-add">Définir</button>
       </div>
       <div class="goal-stats" id="goalStats" style="display:none">
-        <div class="gs-item">
-          <span>Mis de côté ce mois</span>
-          <strong id="goalMonthAmount" class="purple-text">0,00 €</strong>
-        </div>
-        <div class="gs-item">
-          <span>Cumul sur l'année</span>
-          <strong id="goalYearCumul" class="purple-text">0,00 €</strong>
-        </div>
+        <div class="gs-item"><span>Mis de côté ce mois</span><strong id="goalMonthAmount" class="purple-text">0,00 €</strong></div>
+        <div class="gs-item"><span>Cumul sur l'année (12 mois)</span><strong id="goalYearCumul" class="purple-text">0,00 €</strong></div>
       </div>
       <p id="goalStatus"></p>
     </section>
@@ -197,16 +175,16 @@
     <section class="card annual-view">
       <h2>📅 Vue annuelle <span id="annualYear"></span></h2>
       <div class="table-wrapper">
-        <table id="annualTable">
+        <table>
           <thead>
             <tr>
               <th>Mois</th>
               <th>Revenus</th>
               <th>Dépenses</th>
               <th>🏦 Épargne</th>
-              <th>🎯 Objectif épargne</th>
+              <th>🎯 Objectif</th>
               <th>₿ Crypto</th>
-              <th>🏠 Reste à vivre</th>
+              <th>🏠 Reste</th>
             </tr>
           </thead>
           <tbody id="annualBody"></tbody>
